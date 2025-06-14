@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armin Ramusovic</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --light-navy: #112240;
+            --lightest-navy: #233554;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --lightest-slate: #ccd6f6;
+            --white: #e6f1ff;
+            --green: #64ffda;
+            --green-tint: rgba(100, 255, 218, 0.1);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--navy);
+            color: var(--slate);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: var(--transition);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            color: var(--green);
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--lightest-slate);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--green);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .social-links a {
+            color: var(--light-slate);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .social-links a:hover {
+            color: var(--green);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: var(--font-mono);
+            color: var(--green);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .hero h2 {
+            color: var(--lightest-slate);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .hero h3 {
+            color: var(--slate);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero p {
+            max-width: 540px;
+            margin-bottom: 3rem;
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            width: fit-content;
+            padding: 1rem 2rem;
+            border: 1px solid var(--green);
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            background-color: transparent;
+        }
+
+        .btn:hover {
+            background-color: var(--green-tint);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            color: var(--lightest-slate);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .section-header::after {
+            content: "";
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            height: 1px;
+            background-color: var(--lightest-navy);
+            margin-left: 1rem;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .skills-grid {
+            list-style: none; /* This removes the default dots */
+            padding-left: 0;  /* Optional: removes indent */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .skill {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .skill::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-size: 1.25rem; /* adjust as needed */
+            line-height: 1;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .image-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--green);
+            mix-blend-mode: multiply;
+            opacity: 0.5;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .image-wrapper:hover::before {
+            opacity: 0;
+        }
+
+        .image-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 2px solid var(--green);
+            border-radius: 4px;
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .image-wrapper:hover::after {
+            top: 15px;
+            left: 15px;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            border-radius: 4px;
+            filter: grayscale(0%);
+            transition: var(--transition);
+        }
+
+        .image-wrapper:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .project {
+            background-color: var(--light-navy);
+            padding: 2rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-icon {
+            color: var(--green);
+            font-size: 2.5rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            color: var(--light-slate);
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+
+        .project-links a:hover {
+            color: var(--green);
+        }
+
+        .project h3 {
+            color: var(--lightest-slate);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .project p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .tech-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--green);
+            background-color: var(--green-tint);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--slate);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .fade-in-delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .fade-in-delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in-delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .fade-in-delay-4 {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-left {
+                display: none;
+            }
+
+            .nav-content {
+                justify-content: flex-end;
+            }
+
+            .hero {
+                padding: 0 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                display: none;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-header::after {
+                max-width: 100px;
+            }
+
+            .social-links {
+                gap: 1.25rem;
+            }
+        }
+
+        /* Placeholder image */
+        .placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: var(--lightest-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--slate);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="nav-left">
+                <a href="#" class="logo">&lt;Armin Ramusovic /&gt;</a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="social-links">
+                <a href="mailto:arminramusovic11@gmail.com" title="Email">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/Amo0802" target="_blank" title="GitHub">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/armin-ramusovic-51b520367" target="_blank" title="LinkedIn">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/>
+                        <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="fade-in">Hi, my name is</h1>
+        <h2 class="fade-in fade-in-delay-1">Armin Ramusovic.</h2>
+        <h3 class="fade-in fade-in-delay-2">I build things for the web and cloud.</h3>
+        <p class="fade-in fade-in-delay-3">
+            I'm a Computer Science student graduating in September 2025, passionate about creating 
+            robust applications with Java Spring Boot and deploying them with modern DevOps practices. 
+            Currently focused on cloud technologies and full-stack development.
+        </p>
+        <a href="#projects" class="btn fade-in fade-in-delay-4">Check out my work!</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <h2>About Me</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    Hello! I'm a passionate Computer Science student with a strong interest in 
+                    backend development and cloud technologies. My journey in tech started with 
+                    Java programming, and I've since expanded into Spring Boot for building 
+                    scalable applications.
+                </p>
+                <p>
+                    I enjoy working with DevOps tools and have been focusing on containerization 
+                    with Docker, orchestration with Kubernetes, and cloud services with AWS. 
+                    I'm also exploring mobile development with Flutter to broaden my skill set.
+                </p>
+                <p>Here are the technologies I've been working with:</p>
+                <ul class="skills-grid">
+                    <li class="skill">Java & Spring Boot</li>
+                    <li class="skill">AWS</li>
+                    <li class="skill">Docker</li>
+                    <li class="skill">Kubernetes</li>
+                    <li class="skill">Flutter</li>
+                    <li class="skill">Android Studio</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <div class="image-wrapper">
+                    <div class="placeholder"><img src="image1.jpeg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-header">
+            <h2>Projects</h2>
+        </div>
+        <div class="projects-grid">
+            <!-- Project 1 - Deployed App -->
+            <div class="project">
+                <div class="project-header">
+                    <div class="project-icon">📱</div>
+                    <div class="project-links">
+                        <a href="#" title="GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                            </svg>
+                        </a>
+                        <a href="#" title="Live Demo">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <h3>Project Name - Full Stack Application</h3>
+                <p>
+                    A full-stack web application built with Spring Boot backend and modern frontend. 
+                    Features include user authentication, RESTful API design, and responsive UI. 
+                    Deployed on cloud platform with CI/CD pipeline.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">Spring Boot</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Docker</span>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project">
+                <div class="project-header">
+                    <div class="project-icon">💻</div>
+                    <div class="project-links">
+                        <a href="#" title="GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <h3>Project Name - Backend Service</h3>
+                <p>
+                    RESTful API service built with Spring Boot implementing best practices. 
+                    Includes comprehensive error handling, input validation, and documentation. 
+                    Containerized with Docker for easy deployment.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">Spring Boot</span>
+                    <span class="tech-tag">REST API</span>
+                    <span class="tech-tag">JUnit</span>
+                </div>
+            </div>
+
+            <!-- AWS DevOps Projects -->
+            <div class="project">
+                <div class="project-header">
+                    <div class="project-icon">☁️</div>
+                    <div class="project-links">
+                        <a href="#" title="View PDF">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <h3>AWS Infrastructure as Code</h3>
+                <p>
+                    Designed and implemented cloud infrastructure using AWS services. 
+                    Created CloudFormation templates for automated deployment of EC2 instances, 
+                    VPC configurations, and S3 buckets with proper security groups.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">AWS</span>
+                    <span class="tech-tag">CloudFormation</span>
+                    <span class="tech-tag">EC2</span>
+                    <span class="tech-tag">VPC</span>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <div class="project-icon">🚀</div>
+                    <div class="project-links">
+                        <a href="#" title="View PDF">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <h3>CI/CD Pipeline with AWS</h3>
+                <p>
+                    Built automated CI/CD pipeline using AWS CodePipeline, CodeBuild, and CodeDeploy. 
+                    Integrated with GitHub for automatic deployments on code push. 
+                    Implemented blue-green deployment strategy for zero-downtime updates.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">AWS CodePipeline</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">ECS</span>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <div class="project-icon">📊</div>
+                    <div class="project-links">
+                        <a href="#" title="View PDF">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <h3>Kubernetes on AWS EKS</h3>
+                <p>
+                    Deployed and managed containerized applications on Amazon EKS. 
+                    Configured auto-scaling, load balancing, and monitoring with CloudWatch. 
+                    Implemented GitOps workflow for Kubernetes deployments.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Kubernetes</span>
+                    <span class="tech-tag">AWS EKS</span>
+                    <span class="tech-tag">Helm</span>
+                    <span class="tech-tag">GitOps</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <h2>Get In Touch</h2>
+        </div>
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <p style="font-size: 1.125rem; margin-bottom: 2rem;">
+                I'm currently looking for opportunities to start my career. 
+                Whether you have a junior position available or just want to connect, 
+                I'd love to hear from you!
+            </p>
+            <a href="mailto:arminramusovic11@gmail.com" class="btn">Say Hello</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+
+    <script>
+        // Smooth scroll behavior for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        let lastScrollTop = 0;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                nav.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                nav.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Add intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all projects
+        document.querySelectorAll('.project').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
